@@ -1,0 +1,10 @@
+.Gem {
+  margin-bottom: 1.25;
+
+  &__info {
+    max-width: 60rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
