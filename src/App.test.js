@@ -1,7 +1,7 @@
 import React from "react";
+import axiosMock from "axios";
 import { render, cleanup, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import axiosMock from "axios";
 
 import App from "./App";
 import { act } from "react-dom/test-utils";
@@ -51,10 +51,8 @@ it("handles no search results", async () => {
   expect(getByTestId("empty-state")).toHaveTextContent("Oops, no gems found");
 });
 
-it("allows the user to search for gems and save them", async () => {
-  const { getByPlaceholderText, getByText, getByTestId, debug } = render(
-    <App />
-  );
+it("allows the user to search for gems and save gems", async () => {
+  const { getByPlaceholderText, getByText, getByTestId } = render(<App />);
 
   fireEvent.change(getByPlaceholderText("e.g. rake"), {
     target: { value: "rake" }
