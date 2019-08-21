@@ -3,9 +3,11 @@
 @mixin container {
   margin: 0 auto;
   max-width: 52rem;
-  padding: 0 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 
   @include wider($tablet) {
-    padding: 0 1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 }
