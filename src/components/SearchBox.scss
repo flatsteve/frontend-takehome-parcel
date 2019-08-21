@@ -1,8 +1,31 @@
+@import "../styles/mixins.scss";
+@import "../styles/variables.scss";
+
 .SearchBox {
-  display: flex;
   align-items: center;
+  background-color: $pink;
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 0 1.75rem 0;
 
   &__input {
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    outline: none;
     padding: 0.75rem;
+    transition: border ease-in 0.3s;
+
+    &::placeholder {
+      color: $light-blue;
+      font-style: italic;
+    }
+
+    &:focus {
+      border-color: $light-blue;
+    }
+  }
+
+  &__message {
+    @include container;
   }
 }

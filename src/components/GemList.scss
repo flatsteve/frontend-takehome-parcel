@@ -1,0 +1,7 @@
+@import "../styles/mixins.scss";
+
+.GemList {
+  @include container;
+
+  padding-bottom: 5rem;
+}

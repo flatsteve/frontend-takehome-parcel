@@ -22,12 +22,11 @@
   "dependencies": {
     "concurrently": "^4.0.1",
     "express": "^4.16.3",
+    "normalize.css": "^8.0.1",
     "parcel": "^1.9.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-router-dom": "^5.0.1"
-  },
-  "devDependencies": {
+    "react-router-dom": "^5.0.1",
     "sass": "^1.22.10"
   }
 }

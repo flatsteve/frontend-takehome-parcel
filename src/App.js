@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
+import Nav from "./components/Nav";
 import Search from "./scenes/Search";
 import MyGems from "./scenes/MyGems";
 
-import "./styles.scss";
+import "./styles/styles.scss";
 
 const App = () => {
   const [searchResults, updateSearchResults] = useState([]);
@@ -13,11 +14,11 @@ const App = () => {
     JSON.parse(localStorage.getItem("saved_gems")) || []
   );
 
-  // Whenever savedGems changes persist to local storage and update map
-  // to allow quickly checking if a gem is saved
+  // Whenever savedGems changes persist to local storage and update hash map
+  // to allow quickly checking if a gem is saved or not
   useEffect(() => {
     const gemsHash = savedGems.reduce((map, gem) => {
-      map[gem.sha] = true;
+      map[gem.sha] = gem.name;
       return map;
     }, {});
 
@@ -36,11 +37,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div>
-        <h1>Gem search 💎</h1>
-        <Link to="/my-gems">My Gems ({savedGems.length})</Link>
-      </div>
-
+      <Nav savedGems={savedGems} />
       <Route
         path="/"
         exact

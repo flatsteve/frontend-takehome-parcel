@@ -1,0 +1,36 @@
+@import "../styles/mixins";
+@import "../styles/variables";
+
+.Nav {
+  background-color: $pink;
+  padding: 1.75rem 0;
+
+  &__container {
+    @include container;
+
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    h1 {
+      color: $dark-blue;
+      margin: 0;
+    }
+
+    p {
+      color: $white;
+      margin: 0.5rem 0 0;
+      font-style: italic;
+    }
+  }
+
+  &__links a:first-of-type {
+    margin-right: 1.25rem;
+  }
+
+  &__link--active {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,20 @@
+@import "../styles/variables.scss";
+
+.EmptyState {
+  background-color: lighten($light-blue, 15%);
+  border-radius: 0.25rem;
+  padding: 1.75rem;
+  margin: 2.5rem;
+
+  &__title {
+    margin: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}

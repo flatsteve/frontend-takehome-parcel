@@ -1,22 +1,35 @@
 import React from "react";
 
+import Button from "./Button";
+
 import "./Gem.scss";
 
 const Gem = ({ data, saved, addOrRemoveGems }) => {
   return (
     <div className="Gem">
-      <h4>
-        <a href={data.homepage_uri} target="_blank">
-          {data.name}
-        </a>{" "}
-        <small>{data.version}</small>
-      </h4>
+      <div className="Gem__info">
+        <div className="Gem__header">
+          <h4>
+            <a href={data.homepage_uri} target="_blank">
+              {data.name}
+            </a>
+          </h4>
 
-      <p className="Gem__info">{data.info}</p>
+          <small>version: {data.version}</small>
+        </div>
 
-      <button onClick={() => addOrRemoveGems({ saved, gemData: data })}>
-        {saved ? "Remove gem" : "Save gem"}
-      </button>
+        <p className="Gem__authors">
+          <small>by {data.authors}</small>
+        </p>
+
+        <p className="Gem__info">{data.info}</p>
+      </div>
+
+      <div className="Gem__action">
+        <Button onClick={() => addOrRemoveGems({ saved, gemData: data })}>
+          {saved ? "Remove" : "Save"}
+        </Button>
+      </div>
     </div>
   );
 };

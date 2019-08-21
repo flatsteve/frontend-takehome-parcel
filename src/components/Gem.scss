@@ -1,10 +1,45 @@
+@import "../styles/variables";
+
 .Gem {
-  margin-bottom: 1.25;
+  align-items: flex-end;
+  border-bottom: 1px solid $light-blue;
+  display: flex;
+  padding: 1.25rem 0;
+
+  &__header {
+    align-items: flex-end;
+    display: flex;
+    margin-top: 0;
+
+    h4 {
+      margin: 0 0.75rem 0 0;
+    }
+
+    small {
+      color: $blue;
+      font-style: italic;
+    }
+  }
+
+  &__authors {
+    color: $blue;
+    margin-top: 0.25rem;
+  }
 
   &__info {
+    margin: 0 1.25rem 0 0;
     max-width: 60rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  &__action {
+    margin-left: auto;
+
+    button {
+      min-width: 6rem;
+      white-space: nowrap;
+    }
   }
 }
