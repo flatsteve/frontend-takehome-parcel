@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   padding: 0.75rem 0 1.75rem 0;
+  white-space: nowrap;
 
   &__input {
     border: 2px solid transparent;
@@ -21,11 +22,16 @@
     }
 
     &:focus {
-      border-color: $light-blue;
+      border-color: $dark-blue;
     }
   }
 
   &__message {
     @include container;
+  }
+
+  &__loading {
+    margin-top: 1.75rem;
+    text-align: center;
   }
 }

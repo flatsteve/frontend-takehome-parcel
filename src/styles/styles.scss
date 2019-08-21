@@ -1,6 +1,23 @@
 @import "../../node_modules/normalize.css/normalize";
 @import "./mixins.scss";
+@import "./responsive.scss";
 @import "./variables.scss";
+
+html {
+  font-size: 90%;
+
+  @include wider($mobile-modern) {
+    font-size: 95%;
+  }
+
+  @include wider($tablet) {
+    font-size: 100%;
+  }
+
+  @include wider($desktop) {
+    font-size: 105%;
+  }
+}
 
 body {
   color: $dark-blue;
@@ -15,4 +32,5 @@ body {
 a {
   color: $dark-blue;
   text-decoration: none;
+  outline-color: $blue;
 }

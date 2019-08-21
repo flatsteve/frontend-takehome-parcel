@@ -1,19 +1,35 @@
 @import "../styles/mixins";
+@import "../styles/responsive";
 @import "../styles/variables";
 
 .Nav {
   background-color: $pink;
-  padding: 1.75rem 0;
+  padding: 1.25rem 0;
+
+  @include wider($mobile-landscape) {
+    padding: 1.75rem 0;
+  }
 
   &__container {
     @include container;
 
     align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+
+    @include wider($mobile-landscape) {
+      flex-direction: row;
+    }
   }
 
   &__title {
+    text-align: center;
+
+    @include wider($mobile-landscape) {
+      text-align: left;
+    }
+
     h1 {
       color: $dark-blue;
       margin: 0;
@@ -26,8 +42,16 @@
     }
   }
 
-  &__links a:first-of-type {
-    margin-right: 1.25rem;
+  &__links {
+    margin-top: 0.75rem;
+
+    @include wider($mobile-landscape) {
+      margin-top: 0;
+    }
+
+    a:first-of-type {
+      margin-right: 1.25rem;
+    }
   }
 
   &__link--active {

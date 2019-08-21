@@ -1,5 +1,11 @@
+@import "./responsive.scss";
+
 @mixin container {
   margin: 0 auto;
   max-width: 52rem;
-  padding: 0 1.25rem;
+  padding: 0 0.75rem;
+
+  @include wider($tablet) {
+    padding: 0 1.25rem;
+  }
 }

@@ -7,9 +7,9 @@ import { API_URL } from "../constants";
 
 import "./SearchBox.scss";
 
-const Search = ({ updateResults }) => {
+const Search = ({ updateResults, gems }) => {
+  const [error, updateError] = useState(false);
   const [submitted, updateSubmitted] = useState(false);
-  const [noResults, updateNoResults] = useState(false);
   const [loading, updateLoading] = useState(false);
   const [searchValue, updateSearchValue] = useState("");
 
@@ -23,17 +23,22 @@ const Search = ({ updateResults }) => {
 
     updateResults([]);
     updateLoading(true);
+    updateError(false);
     updateSubmitted(false);
-    updateNoResults(false);
 
     fetch(`${API_URL}?query=${searchValue}`)
-      .then(res => res.json())
-      .then(searchResults => {
-        if (searchResults.length === 0) {
-          return updateNoResults(true);
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error();
         }
-
+      })
+      .then(searchResults => {
         updateResults(searchResults);
+      })
+      .catch(() => {
+        updateError(true);
       })
       .finally(() => {
         updateLoading(false);
@@ -43,7 +48,7 @@ const Search = ({ updateResults }) => {
 
   const renderEmptyMessage = () => {
     if (loading) {
-      return <p>Loading RubyGems...</p>;
+      return <h3 className="SearchBox__loading">Loading RubyGems...</h3>;
     }
 
     if (!submitted) {
@@ -57,7 +62,18 @@ const Search = ({ updateResults }) => {
       );
     }
 
-    if (noResults) {
+    if (error) {
+      return (
+        <EmptyState title="Somethings went wrong...">
+          <p>
+            There was a problem submitting your search. Please refresh the page
+            and try again.
+          </p>
+        </EmptyState>
+      );
+    }
+
+    if (gems.length === 0) {
       return (
         <EmptyState title="Oops, no gems found...">
           <p>
@@ -74,18 +90,20 @@ const Search = ({ updateResults }) => {
   return (
     <>
       <form onSubmit={getSearchResults} className="SearchBox">
-        <input
-          className="SearchBox__input"
-          type="text"
-          value={searchValue}
-          onChange={e => updateSearchValue(e.target.value)}
-          placeholder="e.g. rake"
-          tabIndex="1"
-        />
+        <div className="container">
+          <input
+            className="SearchBox__input"
+            type="text"
+            value={searchValue}
+            onChange={e => updateSearchValue(e.target.value)}
+            placeholder="e.g. rake"
+            tabIndex="1"
+          />
 
-        <Button type="submit" tabIndex="2" disabled={!searchValue || loading}>
-          Search Gems
-        </Button>
+          <Button type="submit" tabIndex="2" disabled={!searchValue || loading}>
+            Search Gems
+          </Button>
+        </div>
       </form>
 
       <div className="SearchBox__message">{renderEmptyMessage()}</div>

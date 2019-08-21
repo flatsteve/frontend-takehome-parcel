@@ -11,7 +11,7 @@ const Search = ({
 }) => {
   return (
     <>
-      <SearchBox updateResults={updateSearchResults} />
+      <SearchBox gems={gems} updateResults={updateSearchResults} />
 
       <GemsList
         gems={gems}
