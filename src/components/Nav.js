@@ -17,7 +17,7 @@ const Nav = ({ savedGems }) => {
 
         <div className="Nav__links">
           <NavLink to="/" exact={true} activeClassName="Nav__link--active">
-            Search Gems
+            Search
           </NavLink>
 
           <NavLink

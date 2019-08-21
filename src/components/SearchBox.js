@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import Button from "./Button";
 import EmptyState from "./EmptyState";
@@ -26,16 +27,10 @@ const Search = ({ updateResults, gems }) => {
     updateError(false);
     updateSubmitted(false);
 
-    fetch(`${API_URL}?query=${searchValue}`)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error();
-        }
-      })
-      .then(searchResults => {
-        updateResults(searchResults);
+    axios
+      .get(`${API_URL}?query=${searchValue}`)
+      .then(({ data }) => {
+        updateResults(data);
       })
       .catch(() => {
         updateError(true);
@@ -64,7 +59,7 @@ const Search = ({ updateResults, gems }) => {
 
     if (error) {
       return (
-        <EmptyState title="Somethings went wrong...">
+        <EmptyState title="Something went wrong...">
           <p>
             There was a problem submitting your search. Please refresh the page
             and try again.

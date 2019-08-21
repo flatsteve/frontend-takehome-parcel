@@ -10,7 +10,7 @@ const GemsList = ({ gems, savedGemsMap, addOrRemoveGems }) => {
   }
 
   return (
-    <div className="GemList">
+    <div className="GemList" data-testid="gems-list">
       {gems.map(gemData => (
         <Gem
           key={gemData.sha}
