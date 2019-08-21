@@ -6,7 +6,10 @@ import axiosMock from "axios";
 import App from "./App";
 import { act } from "react-dom/test-utils";
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  axiosMock.get.mockReset();
+});
 
 it("loads the app in its initial state", () => {
   const { getByText, getByTestId } = render(<App />);
@@ -16,7 +19,39 @@ it("loads the app in its initial state", () => {
   expect(getByTestId("empty-state")).toHaveTextContent("Lets get started");
 });
 
-it("allows the user to search for gems", async () => {
+it("handles search errors", async () => {
+  const { getByPlaceholderText, getByText, getByTestId } = render(<App />);
+
+  fireEvent.change(getByPlaceholderText("e.g. rake"), {
+    target: { value: "rake" }
+  });
+
+  axiosMock.get.mockRejectedValueOnce(new Error());
+
+  await act(async () => {
+    fireEvent.click(getByText("Search Gems"));
+  });
+
+  expect(getByTestId("empty-state")).toHaveTextContent("Something went wrong");
+});
+
+it("handles no search results", async () => {
+  const { getByPlaceholderText, getByText, getByTestId } = render(<App />);
+
+  fireEvent.change(getByPlaceholderText("e.g. rake"), {
+    target: { value: "asd" }
+  });
+
+  axiosMock.get.mockResolvedValueOnce({ data: [] });
+
+  await act(async () => {
+    fireEvent.click(getByText("Search Gems"));
+  });
+
+  expect(getByTestId("empty-state")).toHaveTextContent("Oops, no gems found");
+});
+
+it("allows the user to search for gems and save them", async () => {
   const { getByPlaceholderText, getByText, getByTestId, debug } = render(
     <App />
   );
@@ -45,38 +80,25 @@ it("allows the user to search for gems", async () => {
   );
 
   expect(getByTestId("gems-list").querySelectorAll(".Gem").length).toBe(3);
-});
 
-it("handles search errors", async () => {
-  const { getByPlaceholderText, getByText, getByTestId } = render(<App />);
+  // Click on the first save button
+  fireEvent.click(getByTestId("gems-list").querySelectorAll(".Button")[0]);
 
-  fireEvent.change(getByPlaceholderText("e.g. rake"), {
-    target: { value: "rake" }
-  });
+  // The first Gem should now be saved
+  expect(
+    getByTestId("gems-list").querySelectorAll(".Gem")[0]
+  ).toHaveTextContent("Remove");
 
-  axiosMock.get.mockRejectedValueOnce(new Error());
+  expect(getByTestId("my-gems-link")).toHaveTextContent("My Gems (1)");
 
-  await act(async () => {
-    fireEvent.click(getByText("Search Gems"));
-  });
+  fireEvent.click(getByTestId("my-gems-link"));
 
-  expect(getByTestId("empty-state")).toHaveTextContent("Something went wrong");
-});
+  expect(getByTestId("gems-list").querySelectorAll(".Gem").length).toBe(1);
 
-it("handles no search results", async () => {
-  const { getByPlaceholderText, getByText, getByTestId } = render(<App />);
+  // Remove the saved Gem
+  fireEvent.click(getByTestId("gems-list").querySelectorAll(".Button")[0]);
 
-  fireEvent.change(getByPlaceholderText("e.g. rake"), {
-    target: { value: "asd" }
-  });
-
-  axiosMock.get.mockResolvedValueOnce({
-    data: []
-  });
-
-  await act(async () => {
-    fireEvent.click(getByText("Search Gems"));
-  });
-
-  expect(getByTestId("empty-state")).toHaveTextContent("Oops, no gems found");
+  expect(getByTestId("empty-state")).toHaveTextContent(
+    "You don't have any saved gems"
+  );
 });

@@ -21,6 +21,7 @@ const Nav = ({ savedGems }) => {
           </NavLink>
 
           <NavLink
+            data-testid="my-gems-link"
             to="/my-gems"
             exact={true}
             activeClassName="Nav__link--active"
